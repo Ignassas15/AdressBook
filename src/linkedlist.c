@@ -52,6 +52,31 @@ void delete_addresses(struct address **head){
 
 }
 
+void delete_position(struct address **head, int position) {
+    struct address *tmp_free;
+    if (position <= 0) {
+        return;
+    } else if (position == 1 && *head != NULL) {
+        tmp_free = *head;
+        *head = (*head)->next;
+        free(tmp_free);
+    } else {
+        struct address *tmp = *head;
+        int list_pos = 1;
+
+        while (list_pos + 1 < position && tmp->next != NULL) {
+            tmp = tmp->next;
+            list_pos++;
+        }
+
+        if (tmp->next != NULL) {
+            tmp_free = tmp->next;
+            tmp->next = tmp->next->next;
+            free(tmp_free);
+        }
+    }
+}
+
 void print_addresses(struct address **head){
     if(*head == NULL){
         return;

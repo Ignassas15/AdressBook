@@ -32,8 +32,13 @@ int main(void){
     char query[] = "";
     find_by_param(&address_list,matched_addresses,matched_size,param,&matches,query);
 
-
+    //check if address list is not null before passing it as a pointer
+    delete_position(&address_list, 1);
+    delete_position(&address_list, 10);
+    delete_position(&address_list, 1);
+    delete_position(&address_list, 5);
     delete_addresses(&address_list);
+    //delete_position(&address_list, 2);
     if (address_file != NULL)
     {
         fclose(address_file);
