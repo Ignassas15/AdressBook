@@ -13,19 +13,34 @@ int main(void){
     FILE *address_file;
     struct address *address_list = NULL;
 
-    address_file = open_address_file("/addresses.csv");
+    int matched_size = 20;
 
+    struct address **matched_addresses = (struct address**) malloc(sizeof(struct address) * matched_size);
+    if(matched_addresses == NULL){
+        printf("ERROR: Could not allocate memory \n");
+        exit(1);
+    }
+
+    address_file = open_address_file("/addresses.csv");
+    
     read_addresses(address_file,&address_list);
 
 
     print_addresses(&address_list);
+    enum search_param param = phone;
+    int matches = 0;
+    char query[] = "";
+    find_by_param(&address_list,matched_addresses,matched_size,param,&matches,query);
 
 
     delete_addresses(&address_list);
-
     if (address_file != NULL)
     {
         fclose(address_file);
+    }
+
+    if(matched_addresses != NULL){
+        free(matched_addresses);
     }
 
     return 0;
@@ -33,6 +48,10 @@ int main(void){
 
 void read_addresses(FILE *file, struct address **head){
     char line[500];
+
+    if(file == NULL){
+        return;
+    }
 
     while(fgets(line,sizeof(line), file)){
         
