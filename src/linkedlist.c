@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "linkedlist.h"
 
@@ -21,7 +22,8 @@ struct address *create_address(char *name, char *surname, char *email, char *pho
 }
 
 void insert_address(struct address **head ,struct address *to_insert){
-    struct address *tmp = *head;
+    
+    struct address* tmp = *head;
 
     if(tmp == NULL){
         *head = to_insert;
@@ -29,7 +31,7 @@ void insert_address(struct address **head ,struct address *to_insert){
     }
 
     while(tmp->next != NULL){
-        tmp->next = tmp->next;
+        tmp = tmp->next;
     }
 
     tmp->next = to_insert;
@@ -41,11 +43,23 @@ void delete_addresses(struct address **head){
     struct address *to_delete = *head;
 
     while (*head != NULL)
-    {
-        free(to_delete);
+    {   
         *head = (*head)->next;
+        free(to_delete);
         to_delete = *head;
     }
     
 
+}
+
+void print_addresses(struct address **head){
+    if(*head == NULL){
+        return;
+    }
+
+    struct address *tmp = *head;
+    while(tmp != NULL){
+        printf("%s %s %s %s", tmp->name,tmp->surname,tmp->email, tmp->phone);
+        tmp = tmp->next;
+    }
 }

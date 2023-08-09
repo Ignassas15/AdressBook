@@ -14,6 +14,7 @@ struct address{
 struct address* create_address(char *name, char *surname, char *email, char *phone);
 
 void insert_address(struct address **head ,struct address *to_insert);
+void print_addresses(struct address **head);
 void remove_address(struct address **head, struct address *to_remove);
 void delete_addresses(struct address **head);
 int delete_position(struct address **head, int position);
