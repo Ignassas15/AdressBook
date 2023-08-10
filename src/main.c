@@ -300,11 +300,23 @@ int check_if_csv(char *line, int needed_commas){
     if(line == NULL){
         return 0;
     }
+
+    
+
     int comma_count = 0;
     for(int i = 0; i < strlen(line); i++){
         if(line[i] == ','){
             comma_count++;
+            //check for two consecutive commas
+            if(i > 0 && line[i-1] == ','){
+                return 0;
+            }
         }
+    }
+
+    //Empty at front or back
+    if(line[strlen(line-1)] == ',' || line[0] == ','){
+        return 0;
     }
 
     if(comma_count == needed_commas){
