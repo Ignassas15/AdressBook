@@ -17,6 +17,8 @@ struct address *create_address(char *line){
         email = strtok(NULL,DELIMITER);
         phone = strtok(NULL,DELIMITER);
 
+        //Add check for name and etc size
+
     if(new_address == NULL){
         return NULL;
     }
@@ -47,17 +49,25 @@ void insert_address(struct address **head ,struct address *to_insert){
 }
 
 int insert_to_position(struct address **head, struct address *to_insert, int position){
-    
-    struct address *tmp = *head;
-    if(position == 1){
-        *head = to_insert;
-        to_insert->next = tmp->next;
-        return 0;
+   
+
+    if(position <= 0){
+        return 1;
     }
 
-    if(*head == NULL) { return 1;}
+    if(position == 1){
+        if(*head == NULL){
+            *head = to_insert;
+        }else{
+            to_insert->next = (*head)->next;
+            *head = to_insert;
+        }
+        
+        return 0;   
+    }
 
     int list_pos = 1;
+    struct address *tmp = *head;
 
     while (tmp->next != NULL && list_pos+1 < position)
     {

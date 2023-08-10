@@ -6,12 +6,15 @@
 
 
 int read_addresses(FILE *file, struct address **head);
+int check_if_csv(char *line, int needed_commas);
 FILE *open_address_file(char *file_name);
 void print_menu_commands();
 void print_search_submenu();
 void print_address(struct address *to_print);
 void print_search_results(struct address **matched_addresses,int matches);
 void clear_newline();
+
+
 
 int main(void){
 
@@ -49,21 +52,22 @@ int main(void){
             }
             break;
         case 2:
-            clear_newline();
             char line[100];
             printf("Enter address in .csv format: \n");
             fgets(line,sizeof(line),stdin);
-            clear_newline();
-            struct address *new_addr = (struct address*) malloc(sizeof(struct address));
-            if(new_addr == NULL){
-                printf("Couldn't allocate memory for new address \n");
+            if(check_if_csv(line,3) == 0){
+                printf("Wrong .csv format");
                 break;
-            }    
+            }
+            
+            struct address *new_addr;
             new_addr = create_address(line);
             pos = 0;
             printf("Enter the position for the new address: \n");
             scanf("%d", &pos);
             clear_newline();
+
+            
             success_code = insert_to_position(&address_list,new_addr,pos);
             if(success_code){
                 printf("Couldn't insert address \n");
@@ -184,6 +188,10 @@ int read_addresses(FILE *file, struct address **head){
             continue;
         }
         
+        if(!check_if_csv(line,3)){
+            return 1;
+        }
+
         struct address *new_address = NULL;
         new_address = create_address(line);
         insert_address(head,new_address);
@@ -246,5 +254,24 @@ void print_search_results(struct address **matched_addresses,int matches){
 void clear_newline(){
     int c;
     while ( (c = getchar()) != EOF && c != '\n') { }
+}
+
+int check_if_csv(char *line, int needed_commas){
+    if(line == NULL){
+        return 0;
+    }
+    int comma_count = 0;
+    for(int i = 0; i < strlen(line); i++){
+        if(line[i] == ','){
+            comma_count++;
+        }
+    }
+
+    if(comma_count == needed_commas){
+        return 1;
+    }else{
+        return 0;
+    }
+
 }
 
