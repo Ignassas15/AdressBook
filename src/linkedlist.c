@@ -2,11 +2,20 @@
 #include <stdio.h>
 #include <string.h>
 #include "linkedlist.h"
+#define DELIMITER ","
 
 
-
-struct address *create_address(char *name, char *surname, char *email, char *phone){
+struct address *create_address(char *line){
     struct address *new_address = (struct address*) malloc(sizeof(struct address));
+        char *name;
+        char *surname;
+        char *email;
+        char *phone;
+
+        name = strtok(line,DELIMITER);
+        surname = strtok(NULL,DELIMITER);
+        email = strtok(NULL,DELIMITER);
+        phone = strtok(NULL,DELIMITER);
 
     if(new_address == NULL){
         return NULL;
@@ -37,6 +46,37 @@ void insert_address(struct address **head ,struct address *to_insert){
     tmp->next = to_insert;
 }
 
+int insert_to_position(struct address **head, struct address *to_insert, int position){
+    
+    struct address *tmp = *head;
+    if(position == 1){
+        *head = to_insert;
+        to_insert->next = tmp->next;
+        return 0;
+    }
+
+    if(*head == NULL) { return 1;}
+
+    int list_pos = 1;
+
+    while (tmp->next != NULL && list_pos+1 < position)
+    {
+        tmp = tmp->next;
+        list_pos++;
+    }
+
+    if(tmp->next == NULL && list_pos+1 < position){
+        return 1;
+    }else{
+        to_insert->next = tmp->next;
+        tmp->next = to_insert;
+    }
+
+    return 0;
+    
+
+}
+
 
 
 void delete_addresses(struct address **head){
@@ -52,11 +92,12 @@ void delete_addresses(struct address **head){
 
 }
 
-void delete_position(struct address **head, int position) {
+int delete_position(struct address **head, int position) {
+    
     struct address *tmp_free;
-    if (position <= 0) {
-        return;
-    } else if (position == 1 && *head != NULL) {
+    if (position <= 0 || *head == NULL)  {
+        return 1;
+    } else if (position == 1) {
         tmp_free = *head;
         *head = (*head)->next;
         free(tmp_free);
@@ -69,12 +110,17 @@ void delete_position(struct address **head, int position) {
             list_pos++;
         }
 
+        
         if (tmp->next != NULL) {
             tmp_free = tmp->next;
             tmp->next = tmp->next->next;
             free(tmp_free);
+        }else{
+            return 1;
         }
     }
+
+    return 0;
 }
 
 void print_addresses(struct address **head){
