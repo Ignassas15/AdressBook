@@ -5,6 +5,11 @@
 #define DELIMITER ","
 
 
+/**
+ * create_address() - creates new adress node from .csv format line
+ * @param line: Line that will be parsed for data
+ * @return: pointer to address or NULL if unsucsessful
+ */
 struct address *create_address(char *line){
     struct address *new_address = (struct address*) malloc(sizeof(struct address));
         char *name;
@@ -30,6 +35,12 @@ struct address *create_address(char *line){
     return new_address;
 }
 
+
+/**
+ * insert_address() - Inserts address node to the end of the linked list
+ * @param head: pointer to the first linked list element
+ * @param to_insert: address node to insert
+ */
 void insert_address(struct address **head ,struct address *to_insert){
     
     struct address* tmp = *head;
@@ -46,6 +57,14 @@ void insert_address(struct address **head ,struct address *to_insert){
     tmp->next = to_insert;
 }
 
+
+/**
+ * insert_to_position() - inserts address node to specified position on the linked list
+ * @param head: pointer to the first linked list element
+ * @param to_insert: address node to insert
+ * @param position: position to which to insert
+ * @return: 0 if successfull 1 if not
+ */
 int insert_to_position(struct address **head, struct address *to_insert, int position){
    
 
@@ -87,6 +106,10 @@ int insert_to_position(struct address **head, struct address *to_insert, int pos
 
 
 
+/**
+ * delete_addresses() - deletes all addresses from linked list and frees the allocated memory
+ * @param head: pointer to the first linked list element
+ */
 void delete_addresses(struct address **head){
     struct address *to_delete = *head;
 
@@ -100,6 +123,13 @@ void delete_addresses(struct address **head){
 
 }
 
+
+/**
+ * delete_position() - deletes the node in the selected position
+ * @param head: pointer to the first linked list element
+ * @param position: position from which to delete
+ * @return: 0 if successfull 1 if not
+ */
 int delete_position(struct address **head, int position) {
     
     struct address *tmp_free;
@@ -131,6 +161,11 @@ int delete_position(struct address **head, int position) {
     return 0;
 }
 
+
+/**
+ * print_addresses() - prints all the addresses in the linked list to console
+ * @param head: pointer to the first linked list element
+ */
 void print_addresses(struct address **head){
     if(*head == NULL){
         return;
@@ -143,6 +178,12 @@ void print_addresses(struct address **head){
     }
 }
 
+/**
+ * find_by_position()) - finds the address node at specified location
+ * @param head: pointer to the first linked list element
+ * @param position: position for which to look
+ * @return: pointer to the addres node or NULL if unsucsessful
+ */
 struct address *find_by_position(struct address **head, int position){
     struct address *tmp = *head;
 
@@ -166,6 +207,16 @@ struct address *find_by_position(struct address **head, int position){
 
 }
 
+
+/**
+ * find_by_param() - finds nodes that match a certain query with their parameters
+ * @param head: pointer to the first linked list element
+ * @param matched: pointer to array that will hold all matched addresses
+ * @param matched_size: the size of matched address array
+ * @param param: Parameter to match the query to
+ * @param match_count: The count of matching addresses
+ * @param query: The query string for matching
+ */
 void find_by_param(struct address **head, struct address **matched, int matched_size,
                    enum search_param param, int *match_count, char* query){
     
