@@ -17,8 +17,6 @@ struct address *create_address(char *line){
         email = strtok(NULL,DELIMITER);
         phone = strtok(NULL,DELIMITER);
 
-        //Add check for name and etc size
-
     if(new_address == NULL){
         return NULL;
     }
