@@ -56,10 +56,11 @@ int main(void){
             printf("Enter address in .csv format: \n");
             fgets(line,sizeof(line),stdin);
             if(check_if_csv(line,3) == 0){
-                printf("Wrong .csv format");
+                printf("Wrong .csv format or the data is too long\n");
+                clear_newline();
                 break;
             }
-            
+
             struct address *new_addr;
             new_addr = create_address(line);
             pos = 0;
