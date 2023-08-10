@@ -176,6 +176,13 @@ int main(void){
     return 0;
 }
 
+
+/**
+ * read_addresses - Reads addresses from file to linked list
+ * @param file: Pointer to opened file
+ * @param head: pointer to first element of linked list.
+ * @return: 0 if successful 1 if not.
+ */
 int read_addresses(FILE *file, struct address **head){
     char line[500];
 
@@ -201,6 +208,11 @@ int read_addresses(FILE *file, struct address **head){
     return 0;
 }
 
+/**
+ * open_address_file - Opens file which stores addresses
+ * @param file_name: Name of the file
+ * @return: pointer to the opened file or NULL if it was unable to open
+ */
 FILE *open_address_file(char *file_name){
     char *home_path = getenv("HOME");
     if(home_path == NULL){
@@ -216,7 +228,9 @@ FILE *open_address_file(char *file_name){
 
 
 
-
+/**
+ * print_menu_commands() - prints menu points to console
+ */
 void print_menu_commands(){
     printf("Here are the available actions: \n");
     printf("1. Read addresses from file \n");
@@ -229,6 +243,10 @@ void print_menu_commands(){
 
 }
 
+
+/**
+ * print_search_submenu() - prints search submenu points to console
+ */
 void print_search_submenu(){
     printf("Here are the available search criteria: \n");
     printf("1. By name or part of it \n");
@@ -237,12 +255,22 @@ void print_search_submenu(){
     printf("4. By phone or part of it \n");
 }
 
+/**
+ * print_address - Prints data of passed address to console
+ * @param to_print: Address to print
+ */
 void print_address(struct address *to_print){
     if(to_print != NULL){
         printf("%s %s %s %s", to_print->name,to_print->surname,to_print->email, to_print->phone);
     }
 }
 
+
+/**
+ * print_search_results() - Prints out matching adress data to console
+ * @param matched_addresses: Pointer to matched addresses.
+ * @param matches: amount of matches.
+ */
 void print_search_results(struct address **matched_addresses,int matches){
     if(matched_addresses == NULL || matches == 0){
         return;
@@ -252,11 +280,22 @@ void print_search_results(struct address **matched_addresses,int matches){
     }
 }
 
+
+/**
+ * clear_newline() - Clears remaining characters and new line symbol from buffer
+ */
 void clear_newline(){
     int c;
     while ( (c = getchar()) != EOF && c != '\n') { }
 }
 
+
+/**
+ * check_if_csv() - Checks if provided line has required amount of commas
+ * @param line: Line to check.
+ * @param needed_commas: Description of the second argument.
+ * @return: 1 if correct 0 if not.
+ */
 int check_if_csv(char *line, int needed_commas){
     if(line == NULL){
         return 0;
