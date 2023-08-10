@@ -211,46 +211,62 @@ struct address *find_by_position(struct address **head, int position){
 /**
  * find_by_param() - finds nodes that match a certain query with their parameters
  * @param head: pointer to the first linked list element
- * @param matched: pointer to array that will hold all matched addresses
- * @param matched_size: the size of matched address array
+ * @param matched: pointer to linked list that will hold all matched addresses
  * @param param: Parameter to match the query to
- * @param match_count: The count of matching addresses
  * @param query: The query string for matching
  */
-void find_by_param(struct address **head, struct address **matched, int matched_size,
-                   enum search_param param, int *match_count, char* query){
+void find_by_param(struct address **head, struct address **matched,enum search_param param, char* query){
     
     struct address *tmp = *head;
-    *match_count = 0;
     if(tmp == NULL){
         
         return;
     }
 
-
     while(tmp != NULL){
+
+        struct address *insertee = (struct address*) malloc(sizeof(struct address));
+        if(insertee == NULL){
+            continue;
+        }else{
+            strcpy(insertee->name, tmp->name);
+            strcpy(insertee->surname, tmp->surname);
+            strcpy(insertee->email, tmp->email);
+            strcpy(insertee->phone, tmp->phone);
+        }
+        
+
     switch (param)
     {
         
     case name:
-        if(strstr(tmp->name,query) != NULL){
-            matched[(*match_count)++] = tmp;
+        if(strstr(insertee->name,query) != NULL){
+            insert_address(matched,insertee);
+        }else{
+            free(insertee);
         }
 
         break;
     case surname:
-        if(strstr(tmp->surname,query) != NULL){
-            matched[(*match_count)++] = tmp;
+        if(strstr(insertee->surname,query) != NULL){
+            insert_address(matched,insertee);
+        }else{
+            free(insertee);
         }
         break;
     case email:
-        if(strstr(tmp->email,query) != NULL){
-            matched[(*match_count)++] = tmp;
+        if(strstr(insertee->email,query) != NULL){
+            insert_address(matched,insertee);
+        }else{
+            free(insertee);
         }
         break;
     case phone:
-        if(strstr(tmp->phone,query) != NULL){
-            matched[(*match_count)++] = tmp;
+        if(strstr(insertee->phone,query) != NULL){
+            printf("%s \n",insertee->phone);
+            insert_address(matched,insertee);
+        }else{
+            free(insertee);
         }
         break;
     default:
@@ -258,11 +274,6 @@ void find_by_param(struct address **head, struct address **matched, int matched_
     }
 
     tmp = tmp->next;
-    if((*match_count) >= matched_size){
-        printf("Breaking the search, not enough space to store all matches\n");
-        return;
-    }
-
     }
 
 }
