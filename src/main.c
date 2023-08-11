@@ -116,15 +116,9 @@ FILE *open_address_file(char *file_name){
 }
 
 /**
- * signal_handler() - Handles sigint
+ * signal_handler() - Handles sigint and sigterm
  * @param signum: signal number
  */
 void signal_handler(int signum){
         EXIT_INTERRUPT = 1;
 }
-
-
-
-
-
-
