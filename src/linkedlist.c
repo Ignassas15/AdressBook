@@ -76,7 +76,7 @@ int insert_to_position(struct address **head, struct address *to_insert, int pos
         if(*head == NULL){
             *head = to_insert;
         }else{
-            to_insert->next = (*head)->next;
+            to_insert->next = *head;
             *head = to_insert;
         }
         
@@ -263,7 +263,6 @@ void find_by_param(struct address **head, struct address **matched,enum search_p
         break;
     case phone:
         if(strstr(insertee->phone,query) != NULL){
-            printf("%s \n",insertee->phone);
             insert_address(matched,insertee);
         }else{
             free(insertee);

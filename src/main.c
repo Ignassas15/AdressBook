@@ -14,6 +14,7 @@ void signal_handler(int signum);
 int main(void){
 
     signal(SIGINT,signal_handler);
+    signal(SIGTERM,signal_handler);
 
     FILE *address_file;
     struct address *address_list = NULL;
@@ -58,6 +59,7 @@ int main(void){
     {
         fclose(address_file);
     }
+
 
     return 0;
 }
