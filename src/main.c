@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
-#include "linkedlist.h"
+#include "../lib/linkedlist.h"
 #include "menu.h"
 
 volatile sig_atomic_t EXIT_INTERRUPT = 0;

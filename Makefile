@@ -1,35 +1,26 @@
 CFLAGS := -Wall -g
-
 SRC_DIR := ./src
 LIB_DIR := ./lib
 DIRS := $(SRC_DIR) $(LIB_DIR)
-
-
-OBJS = $(wildcard $(SRC_DIR)/*.o)
+LDFLAGS := -Wl,-rpath=$(LIB_DIR)
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(SRC_DIR)/%.o, $(SRCS))
 TARGET := addressbook
 
-.PHONY: all $(LIB_DIRS) clean
+.PHONY: all clean $(DIRS)
 
 all: $(TARGET)
 
-
-
-
-$(TARGET): $(OBJS) $(DIRS)
-	$(CC) $(CFLAGS) -o $@ $^ -l$(LIB_DIR) -llinkedlist
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ -L$(LIB_DIR) -llinkedlist $(LDFLAGS)
 
 $(DIRS):
 	$(MAKE) -C $@
 
-
-#	$(CC) $(CFLAGS) -llinkedlist -L../lib -o $@ $^
+$(OBJS): $(SRCS) $(DIRS)
 
 clean:
-	for dir in $(LIB_DIRS); do \
+	for dir in $(DIRS); do \
 		$(MAKE) -C $$dir clean; \
 	done
-	$(RM) $(TARGET)
-
-
-
-
+	$(RM) $(TARGET) $(OBJS)

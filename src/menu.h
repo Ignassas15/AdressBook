@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "linkedlist.h"
+#include "../lib/linkedlist.h"
 
 void print_menu_commands();
 void print_search_submenu();

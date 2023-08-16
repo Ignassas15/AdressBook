@@ -2,6 +2,7 @@ CFLAGS := -Wall -fPIC
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
 
+
 TARGET := liblinkedlist.so 
 
 .PHONY: clean all
@@ -9,7 +10,7 @@ TARGET := liblinkedlist.so
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -shared -o $@ $^
+	$(CC) $(CFLAGS) -shared -o $@ $^ 
 
 %.o : %.c 
 	$(CC) $(CFLAGS) -c -o $@ $<

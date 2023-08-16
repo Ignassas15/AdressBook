@@ -11,7 +11,7 @@ all: $(OBJS)
 #	$(CC) $(CFLAGS) -llinkedlist -L../lib -o $@ $^
 	
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $< 
 
 
 clean:
