@@ -229,10 +229,8 @@ void find_by_param(struct address **head, struct address **matched,enum search_p
         if(insertee == NULL){
             continue;
         }else{
-            strcpy(insertee->name, tmp->name);
-            strcpy(insertee->surname, tmp->surname);
-            strcpy(insertee->email, tmp->email);
-            strcpy(insertee->phone, tmp->phone);
+            *insertee = *tmp;
+            insertee->next = NULL;
         }
         
 

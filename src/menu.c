@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+/**
+ * enter_adress_menu() - Handles entering new address by hand
+ * @param address_list: pointer to first linked list element
+ */
 void enter_adress_menu(struct address **address_list){
     char line[100];
     printf("Enter address in .csv format: \n");
@@ -28,11 +33,19 @@ void enter_adress_menu(struct address **address_list){
 
 }
 
+/**
+ * print_address_list_menu() - Handles printing of all addresses
+ * @param address_list: pointer to first linked list element
+ */
 void print_address_records_menu(struct address **address_list){
     printf("All addresses: \n");
     print_addresses(address_list);
 }
 
+/**
+ * delete_selected_menu() - Handles deletion of selected linked list element
+ * @param address_list: pointer to first linked list element
+ */
 void delete_selected_menu(struct address **address_list){
     printf("Enter the position of the address to delete: \n");
     int pos = read_menu_digit();
@@ -44,6 +57,10 @@ void delete_selected_menu(struct address **address_list){
     }
 }
 
+/**
+ * find_by_position_menu()) - Handles search by position
+ * @param address_list: pointer to first linked list element
+ */
 void find_by_position_menu(struct address **address_list){
     printf("Enter the address position: \n");
     int pos = read_menu_digit();
@@ -56,6 +73,11 @@ void find_by_position_menu(struct address **address_list){
     }
 }
 
+
+/**
+ * find_by_param_menu() - Handles search by parameter
+ * @param address_list: pointer to first linked list element
+ */
 void find_by_param_menu(struct address **address_list){
             struct address *search_matches = NULL;
             print_search_submenu();
@@ -71,6 +93,11 @@ void find_by_param_menu(struct address **address_list){
             delete_addresses(&search_matches);
 }
 
+/**
+ * get_selected_param() - Selects search parameter from selection number
+ * @param selection: Which parameter option the user selected
+ * @return: Selected parameters enum or name parameter as default
+ */
 enum search_param get_selected_param(int selection){
     enum search_param param;
     switch (selection)
