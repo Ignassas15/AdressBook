@@ -1,4 +1,3 @@
-#BIN := addressbook
 CFLAGS := -Wall -g
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
@@ -7,9 +6,6 @@ OBJS := $(SRCS:.c=.o)
 
 all: $(OBJS)
 
-#$(BIN): $(OBJS)
-#	$(CC) $(CFLAGS) -llinkedlist -L../lib -o $@ $^
-	
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $< 
 
