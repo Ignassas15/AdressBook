@@ -1,17 +1,18 @@
-CC = gcc
-CFLAGS = -Wall -g
-SRCS = main.c linkedlist.c menu.c
-OBJS = $(SRCS:.c=.o)
+#BIN := addressbook
+CFLAGS := -Wall -g
+SRCS := $(wildcard *.c)
+OBJS := $(SRCS:.c=.o)
 
+.PHONY: clean all
 
-all: addresssbook
+all: $(OBJS)
 
-addressbook: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+#$(BIN): $(OBJS)
+#	$(CC) $(CFLAGS) -llinkedlist -L../lib -o $@ $^
 	
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-.PHONY: clean
+
 clean:
-	rm -f $(OBJS) addressbook
+	$(RM) $(OBJS)
